@@ -4,4 +4,8 @@ version = "0.1.0"
 description = "Devin is your very own AI command centre"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["rich>=14.1.0"]
+dependencies = [
+    "pytest>=8.4.1",
+    "rich>=14.1.0",
+    "ruff>=0.12.11",
+]
