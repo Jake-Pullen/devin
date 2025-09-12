@@ -13,7 +13,7 @@ from tools import ToolExecutor
 import random
 import time
 
-LM_STUDIO_URL = "http://127.0.0.1:1234/v1/chat/completions"  # default LM Studio endpoint
+LM_STUDIO_URL = "http://127.0.0.1:1234/v1/chat/completions"
 EXIT_STRINGS = ['exit','goodbye','go away','fuck off']
 
 console = Console()
@@ -34,13 +34,7 @@ please reply with only the tool call if you need to
     }
   ]
 }'''
-#   "parameters": {
-#     "type": "object",
-#     "properties": {
-#       "city": {"type": "string", "description": "City name"},
-#     },
-#     "required": ["city"]
-#   },
+
 def ask_model(prompt: str, url=LM_STUDIO_URL) -> str:
     payload = {
         "model": 'qwen/qwen3-coder-30b',
