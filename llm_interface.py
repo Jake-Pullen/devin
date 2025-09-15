@@ -30,29 +30,29 @@ class llm():
     def ask_model(self, prompt: str, url=config.LM_STUDIO_URL) -> str:
         # prompt = config.PRE_PROMPT + prompt
         payload = {
-        "model": 'qwen/qwen3-coder-30b',
-        "messages": [],
-        "temperature": 0.7,
-        "max_tokens": 2048,
+            "model": 'qwen/qwen3-coder-30b', #TODO: make this read from config
+            "messages": [],
+            "temperature": 0.7,
+            "max_tokens": 2048,
         }
         self.add_to_history({"role": "user", "content": prompt})
 
         payload["messages"] = [
-                {"role": "system", "content": config.SYSTEM_MESSAGE}
-            ] + self.context['history']
+            {"role": "system", "content": config.SYSTEM_MESSAGE}
+        ] + self.context['history']
         self.logger.debug(f'json payload: {payload}')
         resp = requests.post(url, json=payload)
         resp.raise_for_status()
         self.logger.debug(resp.json())
         self.add_to_history(resp.json()["choices"][0]["message"])
         return resp.json()["choices"][0]["message"]["content"].strip()
-    
+
     def tool_response(self, prompt: str, url=config.LM_STUDIO_URL) -> str:
         payload = {
-        "model": 'qwen/qwen3-coder-30b',
-        "messages": [],
-        "temperature": 0.7,
-        "max_tokens": 2048,
+            "model": 'qwen/qwen3-coder-30b', #TODO: make this read from config
+            "messages": [],
+            "temperature": 0.7,
+            "max_tokens": 2048,
         }
         payload["messages"] =  [{"role": "tool", "content": prompt}]
         resp = requests.post(url, json=payload)

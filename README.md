@@ -11,61 +11,83 @@ Devin is designed to be a personal AI assistant that:
 - Responds to user questions in a conversational manner
 - Scales from simple question answering to complex multi-agent workflows
 - Provides a foundation for building sophisticated AI tools and systems
+---
 
-## Getting Started
+# 🧠 Local LLM Assistant with UV
 
-### Prerequisites
+A simple yet powerful local AI assistant that leverages a locally hosted LLM (via LM Studio) and integrates tools such as weather lookup and folder search. Built using Python, with package management handled via [UV](https://github.com/astral-sh/uv).
 
-Before running Devin, you'll need to set up your local LLM environment.
-Refer to the [Configuration](#configuration) section below.
+## 📌 Overview
 
-### Installation
+This project allows you to interact with a local large language model (LLM) through a terminal-based interface. It supports tool integration for tasks like fetching current weather or locating folders on your machine.
 
-1. Clone/Fork this repository
-1. Use UV to set up requirements and environment:
+### Features
+- ✅ Communicates with LM Studio via API
+- ✅ Tool support: `get_weather`, `find_folder`
+- ✅ Easy-to-use CLI interface
+- ✅ Uses UV for fast, modern package management
+
+## 🛠️ Prerequisites
+
+Before running this project, make sure you have:
+
+- [LM Studio](https://lmstudio.ai/) installed and running with a model (e.g., `qwen/qwen3-coder-30b`)
+- [UV](https://github.com/astral-sh/uv) installed for package management
+
+## 📦 Installation
+
+1. Clone or download this repository.
+2. Install dependencies using UV:
+
 ```bash
 uv sync
 ```
 
-### Running Devin
+> This command will install all project dependencies listed in `pyproject.toml`.
 
-To start Devin, simply run:
+3. Ensure LM Studio is running and the server is accessible at `http://127.0.0.1:1234/v1/chat/completions`.
+
+## ▶️ Usage
+
+Run the application using:
+
 ```bash
 uv run main.py
 ```
 
-This will initialize the AI assistant and begin listening for your questions.
+Then, you can interact with the LLM by typing prompts directly into the terminal.
 
-## Configuration
+### Example Tools
 
-Devin uses a configuration file to connect to your local LLM.
-The configuration should be set up in `config.yaml`
+You can use the following tools in your prompts:
+- `get_weather`: Get current weather for a location.
+  - Example prompt: *“What’s the weather like in London?”*
+- `find_folder`: Find folders matching a name.
+  - Example prompt: *“Find the devin folder”*
 
-```yaml
-llm:
-  model_path: "path/to/your/local/model"
-  api_base: "http://localhost:1234/v1"
-```
+## 🧪 Development
 
-### Local LLM Setup
+To add new tools or modify existing ones:
+1. Add your function to `tools.py`.
+2. Register it in `ToolExecutor` class under `self.tools`.
+3. Update the system prompt in `config.py` if needed.
 
-Devin currently supports connecting to local LLMs such as:
-- [Ollama](https://ollama.com/)
-- [LM Studio](https://lmstudio.ai/)
-- [LocalAI](https://localai.io/)
+## 📄 License
 
-Make sure your chosen LLM is running and accessible before starting Devin.
+This project is licensed under the GNU General Public License v3.0 – see the [LICENSE](LICENSE) file for details.
+
+---
 
 ## Roadmap
 
 ### Phase 1: Core Functionality
-- [ ] Basic LLM connection and response
-- [ ] Conversation history management
-- [ ] Enhanced response formatting
+- [x] Basic LLM connection and response
+- [x] Conversation history management
+- [x] Enhanced response formatting
 
 ### Phase 2: Tool Integration
 - [ ] Web search capabilities
-- [ ] File system operations
+- [x] File system operations
 - [ ] Code execution environment
 
 ### Phase 3: Multi-Agent System

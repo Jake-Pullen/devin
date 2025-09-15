@@ -28,7 +28,7 @@ class RichConsoleHandler(logging.StreamHandler):
         # elif record.levelno >= logging.DEBUG:
         #     console.print(f"[bold green]DEBUG:[/bold green] {record.getMessage()}")
 
-            
+
 def main(logger):
     logger.info('Application Started')
     language_model = llm(logger)
@@ -37,7 +37,7 @@ def main(logger):
         if llm_prompt.lower() in config.EXIT_STRINGS:
             sys.exit()
         start = time.time()
-          
+
         llm_reply = language_model.ask_model(llm_prompt)
         logger.info(f"LLM Reply: {llm_reply}")
         handled_response = language_model.handle_llm_reply(llm_reply)
@@ -46,6 +46,8 @@ def main(logger):
 
         if handled_response != llm_reply:
             output = language_model.tool_response(prompt=f'Make this lovely markdown, use fun emojis {handled_response}')
+            #TODO: Make sure to pass the history into the this so that if we ask additional questions it has context
+            # For example get weather AND suggest clothing based on weather.
         elif handled_response == llm_reply:
             output = handled_response
 
@@ -59,7 +61,6 @@ def main(logger):
         console.print(panel_narrow)
 
 if __name__ == "__main__":
-    # Setup logging with custom handler for warnings and errors
     logging.basicConfig(
         level=logging.DEBUG,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -67,13 +68,9 @@ if __name__ == "__main__":
             logging.FileHandler('app.log')
         ]
     )
-    
+
     logger = logging.getLogger(__name__)
     logger.addHandler(RichConsoleHandler())
     logger.info("Logging Instantiated")
-    
+
     main(logger)
-    
-
-
-
