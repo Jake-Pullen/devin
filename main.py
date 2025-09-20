@@ -11,8 +11,6 @@ from llm_interface import llm
 
 import logging
 
-#TODO: add context for llm calls so we have history and can chain messages
-
 console = Console()
 
 class RichConsoleHandler(logging.StreamHandler):
@@ -45,9 +43,10 @@ def main(logger):
         logger.info(f"Response equals original: {handled_response == llm_reply}")
 
         if handled_response != llm_reply:
-            output = language_model.tool_response(prompt=f'Make this lovely markdown, use fun emojis {handled_response}')
-            #TODO: Make sure to pass the history into the this so that if we ask additional questions it has context
-            # For example get weather AND suggest clothing based on weather.
+            output = language_model.tool_response(prompt=f'''Your original Request was: {llm_prompt},
+This is the tool reply: {handled_response}
+Make a markdown format reply, using fun emojis.
+''')
         elif handled_response == llm_reply:
             output = handled_response
 
